@@ -1,0 +1,168 @@
+/* ─────────────────────────────────────────
+   HTML Preview Plugin — styles.css
+   Minimal flat design, no shadows, no hover animations
+───────────────────────────────────────── */
+
+.hpv-section-heading {
+  font-size: var(--font-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-top: 20px;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.hpv-status-block {
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m, 4px);
+  padding: 10px 14px;
+  margin-top: 8px;
+}
+
+.hpv-status-block p {
+  margin: 3px 0;
+  color: var(--text-muted);
+  font-size: var(--font-small);
+}
+
+.hpv-status-block p:first-child {
+  color: var(--text-normal);
+  font-weight: 600;
+}
+
+.hpv-statusbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: default;
+  font-size: var(--font-small);
+}
+
+.hpv-statusbar svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+/* ── Embed shell ── */
+.hpv-embed {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-m, 4px);
+  background: var(--background-secondary);
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.hpv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  background: var(--background-secondary);
+}
+
+.hpv-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.hpv-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hpv-file-name {
+  color: var(--text-normal);
+  font-size: var(--font-small);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hpv-file-path {
+  color: var(--text-muted);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hpv-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hpv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-m, 4px);
+  font-size: var(--font-small);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--background-modifier-border);
+  background: var(--background-primary);
+  color: var(--text-normal);
+  user-select: none;
+}
+
+.hpv-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.hpv-btn.mod-cta {
+  border-color: var(--interactive-accent);
+  color: var(--interactive-accent);
+  background: transparent;
+}
+
+/* ── Frame wrap — grows to full content height via JS ── */
+.hpv-frame-wrap {
+  width: 100%;
+  min-height: 320px;
+  height: 320px;
+  overflow: visible;
+  background: white;
+}
+
+.hpv-frame {
+  width: 100%;
+  height: 320px;
+  min-height: 320px;
+  border: 0;
+  display: block;
+  background: white;
+  overflow: hidden;
+}
+
+.hpv-collapsed {
+  padding: 12px 14px;
+  color: var(--text-muted);
+  font-size: var(--font-small);
+  background: var(--background-primary);
+}
+
+.hpv-inline-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hpv-inline-icon svg {
+  width: 13px;
+  height: 13px;
+}

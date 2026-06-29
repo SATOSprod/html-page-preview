@@ -1,0 +1,10 @@
+{
+  "id": "html-preview",
+  "name": "HTML Preview",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Inline preview for embedded HTML files in Obsidian. Expand HTML files directly inside notes with fixed 16:9 or infinite-height rendering.",
+  "author": "SATOSprod",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}

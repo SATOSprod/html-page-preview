@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build output
+main.js
+main.js.map
+
+# Obsidian user data
+data.json
+
+# TypeScript cache
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Archive / dist
+*.zip
+dist/
+
+# Secrets
+.env
+.env.local
+.env.*
