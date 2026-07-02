@@ -215,10 +215,10 @@ export default class HtmlPreviewPlugin extends Plugin {
 	private statusBarEl: HTMLElement | null = null;
 
 	async onload(): Promise<void> {
-		this.statusBarEl = this.addStatusBarItem();
-		this.statusBarEl.addClass("hpv-statusbar");
-		this.statusBarEl.innerHTML = `${SVG_HTML}<span>HTML Preview</span>`;
-		this.statusBarEl.setAttribute("title", "HTML Preview — inline HTML rendering");
+		// this.statusBarEl = this.addStatusBarItem();
+		// this.statusBarEl.addClass("hpv-statusbar");
+		// this.statusBarEl.innerHTML = `${SVG_HTML}<span>HTML Preview</span>`;
+		// this.statusBarEl.setAttribute("title", "HTML Preview — inline HTML rendering");
 
 		this.addSettingTab(new HtmlPreviewSettingTab(this.app, this));
 
