@@ -1,5 +1,5 @@
 {
-  "name": "obsidian-html-preview",
+  "name": "obsidian-html-page-preview",
   "version": "1.0.0",
   "description": "Inline HTML preview plugin for Obsidian",
   "main": "main.js",

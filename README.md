@@ -1,4 +1,4 @@
-# HTML Preview
+# HTML Page Preview
 
 > Inline preview for embedded HTML files in Obsidian.
 > Expand `![[page.html]]` directly inside your note and render the HTML page there.
@@ -37,8 +37,8 @@
 ### From source
 
 ```bash
-git clone https://github.com/SATOSprod/html-preview.git
-cd html-preview
+git clone https://github.com/SATOSprod/html-page-preview.git
+cd html-page-preview
 npm install
 npm run build
 ```
@@ -46,13 +46,13 @@ npm run build
 Copy these files into your vault:
 
 ```text
-<your-vault>/.obsidian/plugins/html-preview/
+<your-vault>/.obsidian/plugins/html-page-preview/
 ├── main.js
 ├── manifest.json
 └── styles.css
 ```
 
-Then open Obsidian → **Settings → Community plugins → Installed plugins** and enable **HTML Preview**.
+Then open Obsidian → **Settings → Community plugins → Installed plugins** and enable **HTML Page Preview**.
 
 ### Development mode
 
@@ -64,7 +64,7 @@ npm run dev
 
 ## Configuration
 
-Open **Settings → HTML Preview**.
+Open **Settings → HTML Page Preview**.
 
 | Setting | Default | Description |
 |---|---|---|
@@ -101,7 +101,7 @@ Open **Settings → HTML Preview**.
 ## File Structure
 
 ```text
-html-preview/
+html-page-preview/
 ├── main.ts
 ├── main.js
 ├── styles.css
