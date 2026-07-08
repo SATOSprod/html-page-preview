@@ -23,7 +23,7 @@
 
 ## Requirements
 
-- Obsidian **0.15.0** or later
+- Obsidian **1.13.0** or later
 - Works with embedded HTML files referenced like:
 
 ```md
@@ -92,7 +92,7 @@ Open **Settings → HTML Page Preview**.
 ## Notes
 
 - The plugin targets **embedded HTML files** only (`.html`, `.htm`)
-- Inline replacement is implemented with a **Markdown post processor**, so the inline HTML preview is designed for **Reading view**
+- Inline replacement is implemented with a **Markdown post processor**, so the inline HTML page preview is designed for **Reading view**
 - **Fixed 16:9** is better for large or complex pages because the note height stays manageable
 - **Infinite height** is useful when you want the entire page rendered at once inside the note
 
