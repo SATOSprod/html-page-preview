@@ -1,12 +1,9 @@
 import {
 	App,
 	MarkdownRenderChild,
-	Notice,
 	Plugin,
 	PluginSettingTab,
-	Setting,
 	TFile,
-	normalizePath,
 } from "obsidian";
 
 // ─────────────────────────────────────────────
@@ -43,8 +40,7 @@ function extractHtmlLinkFromEmbed(embedEl: Element): string {
 		if (isHtmlPath(cleaned)) return cleaned;
 	}
 	const descendants = Array.from(embedEl.querySelectorAll("a, span, div"));
-	for (const node of descendants) {
-		const el = node as Element;
+	for (const el of descendants) {
 		const values: (string | null)[] = [
 			el.getAttribute("href"),
 			el.getAttribute("data-href"),
@@ -57,6 +53,14 @@ function extractHtmlLinkFromEmbed(embedEl: Element): string {
 		}
 	}
 	return "";
+}
+
+function appendSvg(target: HTMLElement, svg: string): void {
+	const doc = new DOMParser().parseFromString(svg, "image/svg+xml");
+	const node = doc.documentElement;
+	if (node && node.nodeName.toLowerCase() === "svg") {
+		target.appendChild(target.ownerDocument.importNode(node, true));
+	}
 }
 
 // ─────────────────────────────────────────────
@@ -98,7 +102,7 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 		try {
 			const doc = iframe.contentDocument;
 			if (!doc || !doc.body || !doc.documentElement) return 0;
-			iframe.style.height = "1px";
+			iframe.setCssStyles({ height: "1px" });
 			const h = Math.max(
 				doc.body.scrollHeight,
 				doc.body.offsetHeight,
@@ -113,19 +117,15 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 	}
 
 	private applyHeight(iframe: HTMLIFrameElement, wrap: HTMLElement, h: number): void {
-		iframe.style.height = `${h}px`;
-		wrap.style.height   = `${h}px`;
+		iframe.setCssStyles({ height: `${h}px` });
+		wrap.setCssStyles({ height: `${h}px` });
 	}
 
 	private startResize(iframe: HTMLIFrameElement, wrap: HTMLElement): void {
 		this.stopResize();
 
-		wrap.style.height    = "320px";
-		wrap.style.minHeight = "320px";
-		wrap.style.overflow  = "visible";
-		iframe.style.width   = "100%";
-		iframe.style.height  = "320px";
-		iframe.style.display = "block";
+		wrap.addClass("hpv-frame-wrap-expanded");
+		iframe.addClass("hpv-frame-active");
 
 		iframe.addEventListener("load", () => {
 			this.stopResize();
@@ -153,7 +153,7 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 	// ── Actions ───────────────────────────────
 
 	private openFile(): void {
-		this.vaultApp.workspace.getLeaf(true).openFile(this.file);
+		void this.vaultApp.workspace.getLeaf(true).openFile(this.file);
 	}
 
 	private togglePreview(): void {
@@ -172,7 +172,7 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 
 		const left = toolbar.createDiv({ cls: "hpv-toolbar-left" });
 		const icon = left.createDiv({ cls: "hpv-inline-icon" });
-		icon.innerHTML = SVG_HTML;
+		appendSvg(icon, SVG_HTML);
 		const meta = left.createDiv({ cls: "hpv-meta" });
 		meta.createDiv({ cls: "hpv-file-name", text: this.file.name });
 		meta.createDiv({ cls: "hpv-file-path", text: this.file.path });
@@ -180,13 +180,14 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 		const right = toolbar.createDiv({ cls: "hpv-toolbar-right" });
 
 		const toggleBtn = right.createEl("button", { cls: "hpv-btn mod-cta" });
-		toggleBtn.innerHTML = this.expanded
-			? `${SVG_COLLAPSE}<span>Collapse preview</span>`
-			: `${SVG_EXPAND}<span>Expand preview</span>`;
+		toggleBtn.empty();
+		appendSvg(toggleBtn, this.expanded ? SVG_COLLAPSE : SVG_EXPAND);
+		toggleBtn.createSpan({ text: this.expanded ? "Collapse preview" : "Expand preview" });
 		toggleBtn.addEventListener("click", () => this.togglePreview());
 
 		const openBtn = right.createEl("button", { cls: "hpv-btn" });
-		openBtn.innerHTML = `${SVG_OPEN}<span>Open file</span>`;
+		appendSvg(openBtn, SVG_OPEN);
+		openBtn.createSpan({ text: "Open file" });
 		openBtn.addEventListener("click", () => this.openFile());
 
 		if (this.expanded) {
@@ -197,9 +198,7 @@ class HtmlPreviewRenderChild extends MarkdownRenderChild {
 
 			// Attach resize listener BEFORE src so load event is never missed
 			this.startResize(iframe, wrap);
-			iframe.src = (this.vaultApp.vault.adapter as any).getResourcePath(
-				normalizePath(this.file.path),
-			);
+			iframe.src = this.vaultApp.vault.getResourcePath(this.file);
 		} else {
 			const el = root.createDiv({ cls: "hpv-collapsed" });
 			el.setText("Preview is collapsed. Click Expand preview to render the HTML file inline.");
@@ -237,7 +236,7 @@ export default class HtmlPreviewPlugin extends Plugin {
 				if (!(file instanceof TFile)) continue;
 				if (!isHtmlPath(file.path)) continue;
 
-				const host = document.createElement("div");
+				const host = activeDocument.createElement("div");
 				embedEl.replaceWith(host);
 				context.addChild(
 					new HtmlPreviewRenderChild(this.app, host, file, this),
@@ -260,9 +259,9 @@ class HtmlPreviewSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "HTML Preview" });
+		// new Setting(containerEl).setName("HTML Preview").setHeading();
 
-		containerEl.createEl("h3", { text: "Usage", cls: "hpv-section-heading" });
+		// new Setting(containerEl).setName("Usage").setHeading();
 
 		const usage = containerEl.createDiv({ cls: "hpv-status-block" });
 		usage.createEl("p", { text: "Embed an HTML file with ![[page.html]] in a note." });
